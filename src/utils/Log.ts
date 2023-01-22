@@ -18,7 +18,7 @@ const getCurrentDate = (): string => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
-  return `[${year}/${month}/${day}-${hours}:${minutes}:${seconds}]`;
+  return `[${day}/${month}/${year}-${hours}:${minutes}:${seconds}]`;
 };
 
 // logger

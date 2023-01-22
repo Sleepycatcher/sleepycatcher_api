@@ -18,3 +18,10 @@ export const createUserSchema = object({
     ),
   }),
 });
+
+export const loginUserSchema = object({
+  body: object({
+    email: string().email().required("Email is required"),
+    password: string().required("Password is required"),
+  }),
+});

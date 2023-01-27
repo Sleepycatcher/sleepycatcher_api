@@ -7,10 +7,19 @@ export interface UserDocument extends mongoose.Document {
   username: string;
   email: string;
   password: string;
+  role: string;
+  watch: {
+    ip: string | null;
+    port: number | null;
+    statut: boolean;
+  };
   createdAt: Date;
   updatedAt: Date;
+  deactivated: boolean;
+  status: "PREMIUM" | "FREE";
   comparePassword: (password: string) => Promise<boolean>;
 }
+
 const UserSchema = new mongoose.Schema(
   {
     username: {
@@ -35,6 +44,18 @@ const UserSchema = new mongoose.Schema(
       minlength: 6,
       maxlength: 1024,
     },
+    role: {
+      type: String,
+      require: true,
+      default: "USER",
+    },
+    watch: {
+      ip: { type: String, default: null },
+      port: { type: String, default: null },
+      statut: { type: Boolean, default: false },
+    },
+    status: String,
+    deactivated: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

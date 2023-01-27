@@ -10,7 +10,7 @@ import {
 import Log from "../utils/Log";
 
 export const createUserHandler = async (req: Request, res: Response) => {
-  Log.info("/GET /api/users");
+  Log.info("/POST /api/users");
   try {
     const user = await createUser(req.body);
     return res.status(201).send(omit(user?.toJSON(), "password"));
@@ -21,7 +21,7 @@ export const createUserHandler = async (req: Request, res: Response) => {
 };
 
 export const loginUserHandler = async (req: Request, res: Response) => {
-  Log.info("/GET /api/users/login");
+  Log.info("/POST /api/users/login");
   try {
     const user = await loginUser(req.body);
     return res.status(200).send(user);

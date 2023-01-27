@@ -10,9 +10,11 @@ import { createUserSchema, loginUserSchema } from "./schema/user.schema";
 export default (app: Express) => {
   app.get("/", (req: Request, res: Response) => {
     req;
-    res
-      .status(401)
-      .send("<h1 style='color:red;text-align:center;'>Api sleepyCatcher</h1>");
+    res.status(404).json({
+      message: "Route GET:/ not found",
+      error: "Not Found",
+      statusCode: 404,
+    });
   });
 
   // Register User
@@ -25,5 +27,6 @@ export default (app: Express) => {
     loginUserHandler
   );
 
+  //check if user is logged in
   app.get("/api/checkLog", getCurrentUserHandler);
 };

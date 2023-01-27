@@ -42,6 +42,8 @@ export const _getUser = async (id: string) => {
 };
 
 export const createUser = async (input: DocumentDefinition<UserDocument>) => {
+  console.log("input", input);
+
   try {
     return await User.create(input);
   } catch (error) {

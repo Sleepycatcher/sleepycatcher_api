@@ -5,10 +5,10 @@ export interface ArticleDocument extends mongoose.Document {
   title: string;
   content: string;
   source: string;
-  tags: Array<Tags>;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  tags?: Array<Tags>;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }
 
 const ArticleSchema = new mongoose.Schema(

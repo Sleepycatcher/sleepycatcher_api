@@ -44,7 +44,7 @@ export default (app: Express) => {
   app.get("/api/auth/check", getCurrentUserHandler);
 
   //get all articles
-  app.get("/api/articles", checkAuth, getAllArticlesHandler);
+  app.get("/api/articles", checkAuth("USER"), getAllArticlesHandler);
 
   //get article by id
   app.get("/api/article/:id", getArticleHandler);

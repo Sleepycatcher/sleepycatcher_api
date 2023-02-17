@@ -1,7 +1,8 @@
 import { DocumentDefinition } from "mongoose";
-import User, { UserDocument } from "../model/user.model";
+import UserModel, { UserDocument } from "../model/user.model";
 import jwt from "jsonwebtoken";
 import Log from "../utils/Log";
+import { User } from "../type/User";
 
 const SECRET_KEY = process.env.SECRET_KEY || "secretKey";
 
@@ -10,6 +11,7 @@ const generateToken = (user: UserDocument) => {
     {
       id: user._id,
       email: user.email,
+      role: user.role,
     },
     SECRET_KEY,
     {
@@ -19,18 +21,20 @@ const generateToken = (user: UserDocument) => {
   return token;
 };
 
-export const verifyToken = (token: string) => {
-  const decoded = jwt.verify(token, SECRET_KEY);
-  if (decoded) {
-    return decoded;
-  } else {
-    return null;
+export const verifyToken = (token: string): User => {
+  try {
+    const user: User = jwt.verify(token, SECRET_KEY) as User;
+    console.log("user", user);
+
+    return user;
+  } catch (err) {
+    throw new Error("Invalid token");
   }
 };
 
 export const _getUser = async (id: string) => {
   try {
-    const user = await User.findById(id);
+    const user = await UserModel.findById(id);
     if (!user) {
       throw new Error("User not found");
     }
@@ -45,7 +49,7 @@ export const createUser = async (input: DocumentDefinition<UserDocument>) => {
   console.log("input", input);
 
   try {
-    return await User.create(input);
+    return await UserModel.create(input);
   } catch (error) {
     Log.error(error);
     throw new Error(error);
@@ -54,7 +58,7 @@ export const createUser = async (input: DocumentDefinition<UserDocument>) => {
 
 export const findUser = async (input: DocumentDefinition<UserDocument>) => {
   try {
-    return await User.findOne({ email: input.email }).select("+password");
+    return await UserModel.findOne({ email: input.email }).select("+password");
   } catch (error) {
     Log.error(error);
     throw new Error(error);
@@ -83,7 +87,7 @@ export const loginUser = async (input: DocumentDefinition<UserDocument>) => {
 
 export const getUsers = async () => {
   try {
-    return await User.find();
+    return await UserModel.find();
   } catch (error) {
     Log.error(error);
     throw new Error(error);

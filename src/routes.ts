@@ -40,11 +40,8 @@ export default (app: Express) => {
     loginUserHandler
   );
 
-  //check if user is logged in
-  app.get("/api/auth/check", getCurrentUserHandler);
-
   //get all articles
-  app.get("/api/articles", checkAuth("USER"), getAllArticlesHandler);
+  app.get("/api/articles", getAllArticlesHandler);
 
   //get article by id
   app.get("/api/article/:id", getArticleHandler);
@@ -52,6 +49,7 @@ export default (app: Express) => {
   //create article
   app.post(
     "/api/article",
+    checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
     createArticleHandler
   );
@@ -59,10 +57,11 @@ export default (app: Express) => {
   //update article
   app.put(
     "/api/article/:id",
+    checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
     updateArticleHandler
   );
 
   //delete article
-  app.delete("/api/article/:id", deleteArticleHandler);
+  app.delete("/api/article/:id", checkAuth("ADMIN"), deleteArticleHandler);
 };

@@ -8,7 +8,6 @@ import {
 } from "./controller/article.controller";
 import {
   createUserHandler,
-  getCurrentUserHandler,
   loginUserHandler,
 } from "./controller/user.controller";
 import checkAuth from "./middleware/checkAuth";

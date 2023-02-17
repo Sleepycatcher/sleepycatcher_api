@@ -3,6 +3,7 @@ import { APP } from "../config/default";
 import { dbConnect } from "./db/connect";
 import Log from "./utils/Log";
 import routes from "./routes";
+import cors from "cors";
 
 const main = async () => {
   const port = APP.port as number;
@@ -12,6 +13,7 @@ const main = async () => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(cors());
 
   app.listen(port, host, () => {
     Log.ready(`Server is running on http://${host}:${port}`);

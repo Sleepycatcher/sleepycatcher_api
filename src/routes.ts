@@ -10,13 +10,14 @@ import {
   createUserHandler,
   loginUserHandler,
 } from "./controller/user.controller";
+import { checkApiKey } from "./middleware/checkApiKey";
 import checkAuth from "./middleware/checkAuth";
 import validateRequest from "./middleware/validateRequest";
 import { createArticleSchema } from "./schema/article.schema";
 import { createUserSchema, loginUserSchema } from "./schema/user.schema";
 
 export default (app: Express) => {
-  app.get("/", (req: Request, res: Response) => {
+  app.get("/", checkApiKey, (req: Request, res: Response) => {
     req;
     res.status(404).json({
       message: "Route GET:/ not found",
@@ -28,6 +29,7 @@ export default (app: Express) => {
   // Register User
   app.post(
     "/api/auth/register",
+    checkApiKey,
     validateRequest(createUserSchema),
     createUserHandler
   );
@@ -35,19 +37,21 @@ export default (app: Express) => {
   // Login User
   app.post(
     "/api/auth/login",
+    checkApiKey,
     validateRequest(loginUserSchema),
     loginUserHandler
   );
 
   //get all articles
-  app.get("/api/articles", getAllArticlesHandler);
+  app.get("/api/articles", checkApiKey, getAllArticlesHandler);
 
   //get article by id
-  app.get("/api/article/:id", getArticleHandler);
+  app.get("/api/article/:id", checkApiKey, getArticleHandler);
 
   //create article
   app.post(
     "/api/article",
+    checkApiKey,
     checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
     createArticleHandler
@@ -56,11 +60,17 @@ export default (app: Express) => {
   //update article
   app.put(
     "/api/article/:id",
+    checkApiKey,
     checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
     updateArticleHandler
   );
 
   //delete article
-  app.delete("/api/article/:id", checkAuth("ADMIN"), deleteArticleHandler);
+  app.delete(
+    "/api/article/:id",
+    checkApiKey,
+    checkAuth("ADMIN"),
+    deleteArticleHandler
+  );
 };

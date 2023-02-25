@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "clear || cls & nodemon --config nodemon.json src/app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/src/app.js"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",

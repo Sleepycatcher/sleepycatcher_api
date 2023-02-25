@@ -33,8 +33,6 @@ export const getArticleHandler = async (req: Request, res: Response) => {
 };
 
 export const createArticleHandler = async (req: Request, res: Response) => {
-  console.log("req.body", req.body);
-
   try {
     const article = await createArticle(req.body);
     return res.status(201).json({ article });

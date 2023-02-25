@@ -15,7 +15,7 @@ const main = async () => {
   app.use(express.json());
   app.use(cors());
 
-  app.listen(port, host, () => {
+  app.listen(port, () => {
     Log.ready(`Server is running on http://${host}:${port}`);
 
     try {

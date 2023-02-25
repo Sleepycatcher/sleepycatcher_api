@@ -6,7 +6,9 @@
   "author": "alexis mouchon <alexismouchon09@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "clear || cls & nodemon --config nodemon.json src/app.ts"
+    "dev": "clear || cls & nodemon --config nodemon.json src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",

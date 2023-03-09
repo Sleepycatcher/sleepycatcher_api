@@ -46,7 +46,7 @@ export const getAllUsersHandler = async (_: Request, res: Response) => {
 };
 
 export const getCurrentUserHandler = async (req: Request, res: Response) => {
-  Log.info("/GET /api/checkLog");
+  Log.info("/GET /api/auth");
 
   const token = req.headers.authorization?.split("Scla ")[1];
   if (!token) {
@@ -58,6 +58,7 @@ export const getCurrentUserHandler = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).send("No user found");
     }
+
     if (typeof user === "object" && user) {
       const userInfo = await _getUser(user.id);
       return res.status(200).json({

@@ -8,6 +8,7 @@ import {
 } from "./controller/article.controller";
 import {
   createUserHandler,
+  getCurrentUserHandler,
   loginUserHandler,
 } from "./controller/user.controller";
 import { checkApiKey } from "./middleware/checkApiKey";
@@ -41,6 +42,9 @@ export default (app: Express) => {
     validateRequest(loginUserSchema),
     loginUserHandler
   );
+
+  //check auth
+  app.get("/api/auth", checkApiKey, checkAuth(), getCurrentUserHandler);
 
   //get all articles
   app.get("/api/articles", checkApiKey, getAllArticlesHandler);

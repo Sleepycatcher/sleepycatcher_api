@@ -38,7 +38,7 @@ export const handleGetAllStatsbyIdUser = async (
   }
 };
 
-export const handleGetAllStats = async (req: Request, res: Response) => {
+export const handleGetAllStats = async (_: Request, res: Response) => {
   try {
     const stats = await StatModel.find();
     return res.status(200).json({ stats });

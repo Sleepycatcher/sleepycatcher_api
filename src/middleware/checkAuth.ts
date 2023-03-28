@@ -16,13 +16,11 @@ const checkAuth =
         return res.status(404).send("Not authorized");
       }
       if (role) {
-        console.log("user.role", user.role);
-        console.log("role", role);
-
         if (user.role !== role) {
           return res.status(403).send("Not authorized");
         }
       }
+
       return next();
     } catch (error: any) {
       Log.error(error);

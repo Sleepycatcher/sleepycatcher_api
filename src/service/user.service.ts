@@ -24,7 +24,6 @@ const generateToken = (user: UserDocument) => {
 export const verifyToken = (token: string): User => {
   try {
     const user: User = jwt.verify(token, SECRET_KEY) as User;
-    console.log("user", user);
 
     return user;
   } catch (err) {
@@ -46,8 +45,6 @@ export const _getUser = async (id: string) => {
 };
 
 export const createUser = async (input: DocumentDefinition<UserDocument>) => {
-  console.log("input", input);
-
   try {
     return await UserModel.create(input);
   } catch (error) {

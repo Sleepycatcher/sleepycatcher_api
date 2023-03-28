@@ -7,6 +7,11 @@ import {
   deleteArticleHandler,
 } from "./controller/article.controller";
 import {
+  handleCreateStat,
+  handleGetAllStats,
+  handleGetAllStatsbyIdUser,
+} from "./controller/statController";
+import {
   createUserHandler,
   getCurrentUserHandler,
   loginUserHandler,
@@ -15,6 +20,7 @@ import { checkApiKey } from "./middleware/checkApiKey";
 import checkAuth from "./middleware/checkAuth";
 import validateRequest from "./middleware/validateRequest";
 import { createArticleSchema } from "./schema/article.schema";
+import { createStatSchema } from "./schema/stat.schema";
 import { createUserSchema, loginUserSchema } from "./schema/user.schema";
 
 export default (app: Express) => {
@@ -54,7 +60,7 @@ export default (app: Express) => {
 
   //create article
   app.post(
-    "/api/article",
+    "/api/admin/article",
     checkApiKey,
     checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
@@ -63,7 +69,7 @@ export default (app: Express) => {
 
   //update article
   app.put(
-    "/api/article/:id",
+    "/api/admin/article/:id",
     checkApiKey,
     checkAuth("ADMIN"),
     validateRequest(createArticleSchema),
@@ -72,9 +78,34 @@ export default (app: Express) => {
 
   //delete article
   app.delete(
-    "/api/article/:id",
+    "/api/admin/article/:id",
     checkApiKey,
     checkAuth("ADMIN"),
     deleteArticleHandler
+  );
+
+  //add stat by idUser
+  app.post(
+    "/api/addStat",
+    checkApiKey,
+    checkAuth(),
+    validateRequest(createStatSchema),
+    handleCreateStat
+  );
+
+  //get all stats by idUser
+  app.get(
+    "/api/getAllStats",
+    checkApiKey,
+    checkAuth(),
+    handleGetAllStatsbyIdUser
+  );
+
+  //get all stats
+  app.get(
+    "/api/admin/getAllStats",
+    checkApiKey,
+    checkAuth("ADMIN"),
+    handleGetAllStats
   );
 };

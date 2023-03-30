@@ -11,7 +11,9 @@ import Log from "../utils/Log";
 export const getAllArticlesHandler = async (_: Request, res: Response) => {
   try {
     const articles = await getArticles();
-    return res.status(200).json({ articles });
+    console.log("articles", articles);
+
+    return res.status(200).json({ ...articles });
   } catch (error) {
     Log.error(error);
     return res.status(500).json({ error: error.message });

@@ -17,10 +17,7 @@ export const createKeyApi = async (
 };
 
 export const compareKeyApi = async (keyApi: string) => {
+  console.log(keyApi);
   const keyapis = await KeyApi.find();
-  if (keyapis.length === 0) {
-    throw new Error("No keyapis found");
-  } else {
-    return keyapis.find((key) => key.key === keyApi);
-  }
+  return keyapis.find((key) => key.key === keyApi);
 };

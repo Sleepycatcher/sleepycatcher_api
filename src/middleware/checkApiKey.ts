@@ -9,7 +9,6 @@ export const checkApiKey = async (
   const apiKey = req.query["API_KEY"] as string;
   if (await compareKeyApi(apiKey)) {
     console.log("API_KEY is valid");
-
     next();
   } else {
     res.status(401).json({
